@@ -32,7 +32,7 @@ public class Wind extends Window {
 		JPanel pan = new JPanel();
 		pan.add(cancel);
 		add(pan, BorderLayout.AFTER_LAST_LINE);
-
+		willClose=true;
 		cancel.addActionListener(new ActionListener() {
 
 			@Override
@@ -98,10 +98,14 @@ public class Wind extends Window {
 							revalidate();
 						}
 						
+						
+						System.out.println("shut down");
+
 						if (willClose) {
 							shutdown();
-							willClose = true;
+							System.out.println("shut down");
 						}
+						willClose = true;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
