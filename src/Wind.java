@@ -88,7 +88,7 @@ public class Wind extends Window {
 				public void run() {
 
 					try {
-						while (time > 0 || !willClose) {
+						while (time > 0 && !willClose) {
 							Thread.sleep(1000);
 							time--;
 							message=Integer.toString(time);
@@ -97,6 +97,7 @@ public class Wind extends Window {
 							repaint();
 							revalidate();
 						}
+						
 						if (willClose) {
 							shutdown();
 							willClose = true;
