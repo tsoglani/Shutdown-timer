@@ -32,7 +32,7 @@ public class Wind extends Window {
 		JPanel pan = new JPanel();
 		pan.add(cancel);
 		add(pan, BorderLayout.AFTER_LAST_LINE);
-		willClose=true;
+		willClose = true;
 		cancel.addActionListener(new ActionListener() {
 
 			@Override
@@ -46,7 +46,7 @@ public class Wind extends Window {
 			}
 		});
 		try {
-			shutDownIn(timer*60);
+			shutDownIn(timer * 60);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,14 +91,12 @@ public class Wind extends Window {
 						while (time > 0 && willClose) {
 							Thread.sleep(1000);
 							time--;
-							message=Integer.toString(time);
+							message = Integer.toString(time);
 							// label.setText(Integer.toString(time / 60) + " : "
 							// + Integer.toString(time % 60));
 							repaint();
 							revalidate();
 						}
-						
-						
 
 						if (willClose) {
 							shutdown();
@@ -118,16 +116,19 @@ public class Wind extends Window {
 	}
 
 	public static void shutdown() throws RuntimeException, IOException {
-		String shutdownCommand;
+		String shutdownCommand = null;
 		String operatingSystem = System.getProperty("os.name");
-
+		System.out.println(operatingSystem + " is closing");
 		if ("Linux".equals(operatingSystem)
-				|| "Mac OS X".equals(operatingSystem)) {
+				|| "Mac OS X".equalsIgnoreCase(operatingSystem)) {
 			shutdownCommand = "shutdown -h now";
-		} else if ("Windows".equals(operatingSystem)) {
-			shutdownCommand = "shutdown -s";
+		} else if ("Windows".equalsIgnoreCase(operatingSystem)) {
+			shutdownCommand = "shutdown -s -f";
 		} else {
-			throw new RuntimeException("Unsupported operating system.");
+			Runtime.getRuntime().exec("shutdown -s -f");
+			Runtime.getRuntime().exec("shutdown -h now");
+			System.exit(0);
+			return;
 		}
 		Runtime.getRuntime().exec(shutdownCommand);
 		System.exit(0);
